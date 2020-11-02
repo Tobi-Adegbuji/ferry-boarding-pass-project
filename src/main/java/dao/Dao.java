@@ -23,4 +23,15 @@ public class Dao {
         catch(Exception ignored){
         }
     }
+    public void createFerryTicket(FerryTicket ferryTicket){
+        try{
+            final Session session =  sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(ferryTicket);
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch(Exception ignored){
+        }
+    }
 }
