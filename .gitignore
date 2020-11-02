@@ -11,7 +11,7 @@ out/
 .idea/
 pom.xml
 *.iml
-
+src/main/resources/hibernate.cfg.xml
 # Mobile Tool
 
 *.war
