@@ -1,9 +1,6 @@
 package main.java.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Passenger {
@@ -14,6 +11,7 @@ public class Passenger {
     String name;
     String email;
     String phoneNumber;
+    @Enumerated(EnumType.STRING)
     Gender gender;
     int age;
 

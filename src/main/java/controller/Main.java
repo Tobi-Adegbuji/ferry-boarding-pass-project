@@ -6,11 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.java.dao.Dao;
+import main.java.model.FerryTicket;
 import main.java.model.Gender;
 import main.java.model.Passenger;
 
 import java.io.File;
 import java.net.URL;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class Main extends Application {
 
@@ -28,7 +31,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Dao dao = new Dao();
-        dao.createPassenger(new Passenger("John","tobi@email.com","6786789867", Gender.MALE,15));
+        Passenger passenger = new Passenger("John","john@email.com","6786789867", Gender.MALE,15);
+        Passenger passenger2 = new Passenger("Shelby","shelby@email.com","7707897865", Gender.FEMALE,82);
+
+        dao.createPassenger(passenger);
+        dao.createPassenger(passenger2);
+        dao.createFerryTicket(new FerryTicket(new Date(),"example","example","example","example",passenger));
+        dao.createFerryTicket(new FerryTicket(new Date(),"example","example","example","example",passenger2));
         launch(args);
     }
 }
