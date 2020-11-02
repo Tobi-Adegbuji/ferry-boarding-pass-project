@@ -12,11 +12,8 @@ out/
 pom.xml
 *.iml
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# Mobile Tool
 
-# Package Files #
-*.jar
 *.war
 *.nar
 *.ear
