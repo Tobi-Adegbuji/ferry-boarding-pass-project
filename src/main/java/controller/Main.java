@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.java.dao.Dao;
+import main.java.model.Gender;
+import main.java.model.Passenger;
 
 import java.io.File;
 import java.net.URL;
@@ -24,6 +27,8 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        Dao dao = new Dao();
+        dao.createPassenger(new Passenger("John","tobi@email.com","6786789867", Gender.MALE,15));
         launch(args);
     }
 }

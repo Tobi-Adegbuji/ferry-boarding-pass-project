@@ -9,13 +9,23 @@ import javax.persistence.Id;
 public class Passenger {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String name;
     String email;
     String phoneNumber;
     Gender gender;
     int age;
+
+    public Passenger(String name, String email, String phoneNumber, Gender gender, int age) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.age = age;
+    }
+
+
 
     public long getId() {
         return id;
