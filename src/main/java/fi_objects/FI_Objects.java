@@ -1,4 +1,4 @@
-package main.java.conditions;
+package main.java.fi_objects;
 
 import main.java.model.Gender;
 import main.java.model.Passenger;
