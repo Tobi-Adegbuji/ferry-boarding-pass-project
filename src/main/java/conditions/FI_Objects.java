@@ -4,10 +4,9 @@ import main.java.model.Gender;
 import main.java.model.Passenger;
 
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Conditions {
+public class FI_Objects {
 
     static public Predicate<Passenger> equalsFemale = person -> person.getGender().equals(Gender.FEMALE);
     static public Predicate<Passenger> greaterThan59 = person -> person.getAge() >= 60;
