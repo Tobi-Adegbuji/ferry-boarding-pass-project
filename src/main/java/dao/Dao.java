@@ -56,7 +56,7 @@ public class Dao {
         try{
             Files.writeString(filePath,"Date: "+ss.getDate().toString()+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Departure Time: "+ss.getDeparture().toString()+" ",StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-            Files.writeString(filePath,"Arrival Time: "+ss.getEstimatedTimeOfArrival().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+            Files.writeString(filePath,"Arrival Time: "+ss.getArrivalTime().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Origin: "+ss.getOrigin().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Original Price: "+ss.getOriginalPrice()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
         }catch(IOException e){
