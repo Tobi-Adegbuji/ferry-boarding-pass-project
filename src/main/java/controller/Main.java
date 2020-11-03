@@ -19,7 +19,6 @@ import java.util.Date;
 
 public class Main extends Application {
 
-    private ChoiceBox gender;
 
     @Override
     public void start(Stage primaryStage) throws Exception{

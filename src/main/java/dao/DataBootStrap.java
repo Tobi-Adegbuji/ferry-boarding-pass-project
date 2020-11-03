@@ -1,11 +1,10 @@
 package main.java.dao;
-
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import main.java.model.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class DataBootStrap {
 
@@ -32,10 +31,10 @@ public class DataBootStrap {
             dao.createEntity(ferry);
             dao.createEntity(ferry2);
 
-            Schedule schedule = new Schedule(new Date(), "Sapelo Island", "Little Tybee Island", new Date(), new Date(), 35.75f, ferry);
-            Schedule schedule1 = new Schedule(new Date(), "Little Tybee Island", "Sapelo Island", new Date(), new Date(), 35.75f, ferry);
-            Schedule schedule2 = new Schedule(new Date(), "St. Catherine's Island ", "Little Tybee Island", new Date(), new Date(), 25.75f, ferry2);
-            Schedule schedule3 = new Schedule(new Date(), "Little Tybee Island", "St. Catherine's Island", new Date(), new Date(), 25.75f, ferry2);
+            Schedule schedule = new Schedule(LocalDate.now(), "Sapelo Island", "Little Tybee Island", LocalTime.of(9,30), LocalTime.of(11,32), 35.75f, ferry);
+            Schedule schedule1 = new Schedule(LocalDate.now(), "Little Tybee Island", "Sapelo Island", LocalTime.of(13,0), LocalTime.of(15,30), 35.75f, ferry);
+            Schedule schedule2 = new Schedule(LocalDate.now(), "St. Catherine's Island ", "Little Tybee Island", LocalTime.of(9,0), LocalTime.of(11,0), 25.75f, ferry2);
+            Schedule schedule3 = new Schedule(LocalDate.now(), "Little Tybee Island", "St. Catherine's Island", LocalTime.of(12,0), LocalTime.of(14,0), 25.75f, ferry2);
 
             ArrayList<Schedule> schedules = new ArrayList<>(Arrays.asList(schedule,schedule1,schedule2,schedule3));
             //Adding schedule to database

@@ -1,6 +1,8 @@
 package main.java.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -8,19 +10,26 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    Date date;
+
+    LocalDate date;
+
     private String origin;
+
     private String destination;
-    private Date departure;
-    private Date arrivalTime;
+
+    private LocalTime departure;
+
+    private LocalTime arrivalTime;
+
     private float originalPrice;
+
     @ManyToOne
     private Ferry ferry;
 
     public Schedule() {
     }
 
-    public Schedule(Date date, String origin, String destination, Date departure, Date estimatedTimeOfArrival, float originalPrice, Ferry ferry) {
+    public Schedule(LocalDate date, String origin, String destination, LocalTime departure, LocalTime estimatedTimeOfArrival, float originalPrice, Ferry ferry) {
         this.date = date;
         this.origin = origin;
         this.destination = destination;
@@ -30,11 +39,11 @@ public class Schedule {
         this.ferry = ferry;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -54,20 +63,20 @@ public class Schedule {
         this.destination = destination;
     }
 
-    public Date getDeparture() {
+    public LocalTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture(LocalTime departure) {
         this.departure = departure;
     }
 
-    public Date getEstimatedTimeOfArrival() {
+    public LocalTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setEstimatedTimeOfArrival(Date estimatedTimeOfArrival) {
-        this.arrivalTime = estimatedTimeOfArrival;
+    public void setArrivalTime(LocalTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public float getOriginalPrice() {
@@ -76,5 +85,13 @@ public class Schedule {
 
     public void setOriginalPrice(float originalPrice) {
         this.originalPrice = originalPrice;
+    }
+
+    public Ferry getFerry() {
+        return ferry;
+    }
+
+    public void setFerry(Ferry ferry) {
+        this.ferry = ferry;
     }
 }
