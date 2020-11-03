@@ -11,41 +11,21 @@ public class Ferry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String origin;
-    private String destination;
     private String ferryName;
-    private Date date;
-    private Date departure;
-    private Date estimatedTimeOfArrival;
-    private float originalPrice;
 
     public Ferry() {
     }
 
-    public Ferry(String origin, String destination, String ferryName, Date date, Date departure, Date estimatedTimeOfArrival, float originalPrice) {
-        this.origin = origin;
-        this.destination = destination;
+    public Ferry(String ferryName) {
         this.ferryName = ferryName;
-        this.date = date;
-        this.departure = departure;
-        this.estimatedTimeOfArrival = estimatedTimeOfArrival;
-        this.originalPrice = originalPrice;
     }
 
-    public String getOrigin() {
-        return origin;
+    public long getId() {
+        return id;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFerryName() {
@@ -54,29 +34,5 @@ public class Ferry {
 
     public void setFerryName(String ferryName) {
         this.ferryName = ferryName;
-    }
-
-    public Date getDeparture() {
-        return departure;
-    }
-
-    public void setDeparture(Date departure) {
-        this.departure = departure;
-    }
-
-    public Date getEstimatedTimeOfArrival() {
-        return estimatedTimeOfArrival;
-    }
-
-    public void setEstimatedTimeOfArrival(Date estimatedTimeOfArrival) {
-        this.estimatedTimeOfArrival = estimatedTimeOfArrival;
-    }
-
-    public float getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(float originalPrice) {
-        this.originalPrice = originalPrice;
     }
 }

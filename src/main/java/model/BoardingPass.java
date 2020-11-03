@@ -15,16 +15,15 @@ public class BoardingPass {
         @ManyToOne
         private Passenger passenger;
         @ManyToOne
-        private Ferry ferry;
-
+        Schedule schedule;
 
         public BoardingPass() {
         }
 
-    public BoardingPass(Passenger passenger, Ferry ferry) {
+    public BoardingPass(Passenger passenger, Schedule schedule) {
         this.passenger = passenger;
-        this.ferry = ferry;
-        price = ferry.getOriginalPrice();
+        this.schedule = schedule;
+        price = schedule.getOriginalPrice();
         calculatePrice();
     }
 
