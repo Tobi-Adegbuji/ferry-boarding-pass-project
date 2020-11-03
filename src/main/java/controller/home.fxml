@@ -10,69 +10,71 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1132.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="1001.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="imageView" fitHeight="680.0" fitWidth="445.0" layoutX="749.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../resources/img/ferry.jpg" />
-            </image>
-        </ImageView>
-        <ImageView fx:id="imageView2" fitHeight="72.0" fitWidth="81.0" layoutX="14.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../resources/img/logo.jpg" />
-            </image>
-        </ImageView>
-        <Label layoutX="204.0" layoutY="117.0" prefHeight="38.0" prefWidth="133.0" text="Name">
+      <ImageView fitHeight="752.0" fitWidth="1084.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../resources/img/island.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="519.0" layoutY="101.0" opacity="0.45" prefHeight="490.0" prefWidth="436.0" style="-fx-background-color: black;" />
+        <Label layoutX="567.0" layoutY="131.0" prefHeight="38.0" prefWidth="133.0" text="Name" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="204.0" layoutY="155.0" />
-        <Label layoutX="204.0" layoutY="269.0" prefHeight="38.0" prefWidth="149.0" text="Phone Number">
+        <TextField layoutX="567.0" layoutY="169.0" promptText="John Doe" />
+        <Label layoutX="567.0" layoutY="283.0" prefHeight="38.0" prefWidth="149.0" text="Phone Number" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="204.0" layoutY="307.0" />
-        <Label layoutX="204.0" layoutY="192.0" prefHeight="38.0" prefWidth="133.0" text="Email">
+        <TextField layoutX="567.0" layoutY="321.0" promptText="000-000-0000" />
+        <Label layoutX="567.0" layoutY="206.0" prefHeight="38.0" prefWidth="133.0" text="Email" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <TextField layoutX="204.0" layoutY="230.0" />
-        <Label layoutX="401.0" layoutY="117.0" prefHeight="38.0" prefWidth="133.0" text="Gender">
+        <TextField layoutX="567.0" layoutY="244.0" promptText="johndoe@example.com" />
+        <Label layoutX="764.0" layoutY="131.0" prefHeight="38.0" prefWidth="133.0" text="Gender" textFill="WHITE">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="225.0" layoutY="22.0" prefHeight="38.0" prefWidth="271.0" text="FERRY RIDES">
-            <font>
-                <Font name="Calibri Bold" size="26.0" />
-            </font>
-        </Label>
-        <ChoiceBox fx:id="choiceBox" layoutX="393.0" layoutY="155.0" prefWidth="150.0" />
-      <Label layoutX="401.0" layoutY="192.0" prefHeight="38.0" prefWidth="133.0" text="Age">
+        <ChoiceBox fx:id="choiceBox" layoutX="756.0" layoutY="169.0" prefWidth="150.0" />
+      <Label layoutX="764.0" layoutY="206.0" prefHeight="38.0" prefWidth="133.0" text="Age" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField layoutX="393.0" layoutY="230.0" />
-      <Button layoutX="341.0" layoutY="480.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
+      <TextField layoutX="756.0" layoutY="244.0" promptText="21" />
+      <Button layoutX="704.0" layoutY="494.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <DatePicker layoutX="298.0" layoutY="412.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="401.0" layoutY="269.0" prefHeight="38.0" prefWidth="133.0" text="Destination">
+      <DatePicker layoutX="567.0" layoutY="392.0" prefHeight="25.0" prefWidth="150.0" promptText="Choose a date" showWeekNumbers="true" />
+      <Label layoutX="756.0" layoutY="354.0" prefHeight="38.0" prefWidth="133.0" text="Destination" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="choiceBox1" layoutX="393.0" layoutY="307.0" prefWidth="150.0" />
-      <Label layoutX="347.0" layoutY="362.0" prefHeight="38.0" prefWidth="52.0" text="Date">
+      <ChoiceBox fx:id="choiceBox1" layoutX="756.0" layoutY="392.0" prefWidth="150.0" />
+      <Label layoutX="567.0" layoutY="354.0" prefHeight="38.0" prefWidth="52.0" text="Date" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Label layoutX="756.0" layoutY="283.0" prefHeight="38.0" prefWidth="149.0" text="Departure Time" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="choiceBox11" layoutX="756.0" layoutY="321.0" prefWidth="150.0" />
+        <Label alignment="CENTER" layoutX="602.0" layoutY="608.0" prefHeight="38.0" prefWidth="271.0" text="FERRY RIDES" textFill="WHITE">
+            <font>
+                <Font name="Calibri Bold" size="26.0" />
+            </font>
+        </Label>
     </children>
 </AnchorPane>
