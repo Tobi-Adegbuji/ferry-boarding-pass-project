@@ -30,19 +30,17 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-        System.out.println("test kai");
 
 
-        //testing i/o function
 
-        Dao dao=new Dao();
-        dao.printTicket(1);
+
 
     }
 
 
     public static void main(String[] args) {
         DataBootStrap.bootStrapData();
-        launch(args);
+
+      launch(args);
     }
 }
