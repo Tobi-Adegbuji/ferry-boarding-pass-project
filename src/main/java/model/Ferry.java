@@ -1,27 +1,35 @@
 package main.java.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 public class Ferry {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String origin;
     private String destination;
     private String ferryName;
+    private Date date;
     private Date departure;
     private Date estimatedTimeOfArrival;
-    private float price;
+    private float originalPrice;
 
-    public Ferry(String origin, String destination, String ferryName, Date departure, Date estimatedTimeOfArrival, float price) {
+    public Ferry() {
+    }
+
+    public Ferry(String origin, String destination, String ferryName, Date date, Date departure, Date estimatedTimeOfArrival, float originalPrice) {
         this.origin = origin;
         this.destination = destination;
         this.ferryName = ferryName;
+        this.date = date;
         this.departure = departure;
         this.estimatedTimeOfArrival = estimatedTimeOfArrival;
-        this.price = price;
+        this.originalPrice = originalPrice;
     }
 
     public String getOrigin() {
@@ -64,11 +72,11 @@ public class Ferry {
         this.estimatedTimeOfArrival = estimatedTimeOfArrival;
     }
 
-    public float getPrice() {
-        return price;
+    public float getOriginalPrice() {
+        return originalPrice;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
     }
 }
