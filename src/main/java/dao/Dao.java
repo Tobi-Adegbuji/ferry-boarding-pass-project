@@ -1,6 +1,7 @@
 package main.java.dao;
 
 import main.java.model.BoardingPass;
+import main.java.model.Ferry;
 import main.java.model.Passenger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,24 +11,14 @@ public class Dao {
     SessionFactory sessionFactory = new Configuration().configure("main/resources/hibernate.cfg.xml")
             .addAnnotatedClass(BoardingPass.class)
             .addAnnotatedClass(Passenger.class)
+            .addAnnotatedClass(Ferry.class)
             .buildSessionFactory();
 
-    public void createPassenger(Passenger passenger){
+    public <T> void createEntity(T entity){
         try{
             final Session session =  sessionFactory.openSession();
             session.beginTransaction();
-            session.save(passenger);
-            session.getTransaction().commit();
-            session.close();
-        }
-        catch(Exception ignored){
-        }
-    }
-    public void createFerryTicket(BoardingPass ferryTicket){
-        try{
-            final Session session =  sessionFactory.openSession();
-            session.beginTransaction();
-            session.save(ferryTicket);
+            session.save(entity);
             session.getTransaction().commit();
             session.close();
         }
