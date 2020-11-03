@@ -31,6 +31,13 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         System.out.println("test kai");
+
+
+        //testing i/o function
+
+        Dao dao=new Dao();
+        dao.printTicket(1);
+
     }
 
 
