@@ -1,10 +1,9 @@
 package main.java.model;
 
 
-import main.java.conditions.Conditions;
+import main.java.conditions.FI_Objects;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class BoardingPass {
@@ -28,16 +27,16 @@ public class BoardingPass {
     }
 
     public void calculatePrice(){
-        if(Conditions.equalsFemale.and(Conditions.lessThan13).test(this.passenger))
-            price = Conditions.calculatePrice.apply(price,.75f);
-        else if(Conditions.equalsFemale.and(Conditions.greaterThan59).test(this.passenger))
-            price = Conditions.calculatePrice.apply(price,.85f);
-        else if(Conditions.lessThan13.test(this.passenger))
-            price = Conditions.calculatePrice.apply(price,.50f);
-        else if(Conditions.greaterThan59.test(this.passenger))
-            price = Conditions.calculatePrice.apply(price,.60f);
-        else if(Conditions.equalsFemale.test(this.passenger))
-            price = Conditions.calculatePrice.apply(price,.25f);
+        if(FI_Objects.equalsFemale.and(FI_Objects.lessThan13).test(this.passenger))
+            price = FI_Objects.calculatePrice.apply(price,.75f);
+        else if(FI_Objects.equalsFemale.and(FI_Objects.greaterThan59).test(this.passenger))
+            price = FI_Objects.calculatePrice.apply(price,.85f);
+        else if(FI_Objects.lessThan13.test(this.passenger))
+            price = FI_Objects.calculatePrice.apply(price,.50f);
+        else if(FI_Objects.greaterThan59.test(this.passenger))
+            price = FI_Objects.calculatePrice.apply(price,.60f);
+        else if(FI_Objects.equalsFemale.test(this.passenger))
+            price = FI_Objects.calculatePrice.apply(price,.25f);
     }
 
     }
