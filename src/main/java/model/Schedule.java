@@ -12,7 +12,7 @@ public class Schedule {
     private String origin;
     private String destination;
     private Date departure;
-    private Date estimatedTimeOfArrival;
+    private Date arrivalTime;
     private float originalPrice;
     @ManyToOne
     private Ferry ferry;
@@ -25,7 +25,7 @@ public class Schedule {
         this.origin = origin;
         this.destination = destination;
         this.departure = departure;
-        this.estimatedTimeOfArrival = estimatedTimeOfArrival;
+        this.arrivalTime = estimatedTimeOfArrival;
         this.originalPrice = originalPrice;
         this.ferry = ferry;
     }
@@ -63,11 +63,11 @@ public class Schedule {
     }
 
     public Date getEstimatedTimeOfArrival() {
-        return estimatedTimeOfArrival;
+        return arrivalTime;
     }
 
     public void setEstimatedTimeOfArrival(Date estimatedTimeOfArrival) {
-        this.estimatedTimeOfArrival = estimatedTimeOfArrival;
+        this.arrivalTime = estimatedTimeOfArrival;
     }
 
     public float getOriginalPrice() {

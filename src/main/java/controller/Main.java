@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import main.java.dao.Dao;
 import main.java.dao.DataBootStrap;
@@ -17,6 +18,8 @@ import java.net.URL;
 import java.util.Date;
 
 public class Main extends Application {
+
+    private ChoiceBox gender;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
