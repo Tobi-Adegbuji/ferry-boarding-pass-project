@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import main.java.dao.Dao;
 import main.java.dao.DataBootStrap;
@@ -47,6 +48,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
         primaryStage.setTitle("Ferry Boarding Pass");
+        primaryStage.getIcons().add(new Image("file:logo.png"));
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
