@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class FerryTicket {
+public class BoardingPass {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private long boardingPassNum;
@@ -19,35 +19,36 @@ public class FerryTicket {
         private float price;
         @ManyToOne
         private Passenger passenger;
+        @ManyToOne
+        private Ferry ferry;
 
 
-        public FerryTicket() {
+        public BoardingPass() {
         }
 
-        public FerryTicket(Date date, String origin, String destination, String arrivalTime, String departureTime, Passenger passenger) {
-            this.boardingPassNum = boardingPassNum;
-            this.date = date;
-            this.origin = origin;
-            this.destination = destination;
-            this.arrivalTime = arrivalTime;
-            this.departureTime = departureTime;
-            this.passenger = passenger;
-            price = 35.00f;
-            calculatePrice();
-        }
-
+    public BoardingPass(Date date, String origin, String destination, String arrivalTime, String departureTime, Passenger passenger, Ferry ferry) {
+        this.date = date;
+        this.origin = origin;
+        this.destination = destination;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.passenger = passenger;
+        this.ferry = ferry;
+        this.price = ferry.getPrice();
+        calculatePrice();
+    }
 
     public void calculatePrice(){
         if(Conditions.equalsFemale.and(Conditions.lessThan13).test(this.passenger))
-            this.price = (float) (this.price - (this.price *  .75));
+            Conditions.calculatePrice.apply(price,.75f);
         else if(Conditions.equalsFemale.and(Conditions.greaterThan59).test(this.passenger))
-            this.price = (float) (this.price - (this.price *  .85));
+            Conditions.calculatePrice.apply(price,.85f);
         else if(Conditions.lessThan13.test(this.passenger))
-            this.price = (float) (this.price - (this.price *  .50));
+            Conditions.calculatePrice.apply(price,.50f);
         else if(Conditions.greaterThan59.test(this.passenger))
-            this.price = (float) (this.price - (this.price *  .60));
+            Conditions.calculatePrice.apply(price,.60f);
         else if(Conditions.equalsFemale.test(this.passenger))
-            this.price = (float) (this.price - (this.price *  .25));
+            Conditions.calculatePrice.apply(price,.25f);
     }
 
     }
