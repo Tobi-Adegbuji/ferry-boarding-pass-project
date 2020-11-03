@@ -23,7 +23,7 @@ public class Main extends Application {
         URL url = new File("src/main/java/controller/home.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Ferry Ticket");
+        primaryStage.setTitle("Ferry Boarding Pass");
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();

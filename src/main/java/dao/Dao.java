@@ -3,6 +3,7 @@ package main.java.dao;
 import main.java.model.BoardingPass;
 import main.java.model.Ferry;
 import main.java.model.Passenger;
+import main.java.model.Schedule;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -12,6 +13,7 @@ public class Dao {
             .addAnnotatedClass(BoardingPass.class)
             .addAnnotatedClass(Passenger.class)
             .addAnnotatedClass(Ferry.class)
+            .addAnnotatedClass(Schedule.class)
             .buildSessionFactory();
 
     public <T> void createEntity(T entity){
