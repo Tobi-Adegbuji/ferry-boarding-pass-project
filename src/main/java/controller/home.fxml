@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="804.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.Main">
     <children>
       <ImageView fitHeight="604.0" fitWidth="953.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -42,36 +42,61 @@
                       <Font size="20.0" />
                   </font>
               </Label>
-              <ChoiceBox fx:id="choiceBox" layoutX="241.0" layoutY="97.0" prefWidth="150.0" />
+              <ChoiceBox fx:id="genderChoiceBox" layoutX="241.0" layoutY="97.0" prefWidth="150.0" />
             <Label layoutX="249.0" layoutY="134.0" prefHeight="38.0" prefWidth="133.0" text="Age" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
             <TextField layoutX="241.0" layoutY="172.0" promptText="21" />
-            <Button layoutX="189.0" layoutY="378.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
+            <Button layoutX="275.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <DatePicker layoutX="52.0" layoutY="320.0" prefHeight="25.0" prefWidth="150.0" promptText="Choose a date" showWeekNumbers="true" />
+            <DatePicker layoutX="241.0" layoutY="249.0" prefHeight="25.0" prefWidth="150.0" promptText="Choose a date" showWeekNumbers="true" />
             <Label layoutX="241.0" layoutY="282.0" prefHeight="38.0" prefWidth="133.0" text="Destination" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceBox1" layoutX="241.0" layoutY="320.0" prefWidth="150.0" />
-            <Label layoutX="52.0" layoutY="282.0" prefHeight="38.0" prefWidth="52.0" text="Date" textFill="WHITE">
+            <ChoiceBox fx:id="destinationChoiceBox" layoutX="241.0" layoutY="320.0" prefWidth="150.0" />
+            <Label layoutX="241.0" layoutY="211.0" prefHeight="38.0" prefWidth="52.0" text="Date" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="241.0" layoutY="211.0" prefHeight="38.0" prefWidth="149.0" text="Departure Time" textFill="WHITE">
+            <Label layoutX="52.0" layoutY="354.0" prefHeight="38.0" prefWidth="149.0" text="Departure Time" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceBox11" layoutX="241.0" layoutY="249.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="departureTime" disable="true" layoutX="52.0" layoutY="392.0" prefWidth="150.0" />
+            <Label layoutX="52.0" layoutY="282.0" prefHeight="38.0" prefWidth="133.0" text="Origin" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="originChoiceBox" layoutX="52.0" layoutY="320.0" prefWidth="150.0" />
          </children></AnchorPane>
+      <AnchorPane layoutX="325.0" layoutY="528.0" opacity="0.76" prefHeight="38.0" prefWidth="442.0" style="-fx-background-color: black; -fx-border-radius: 45px;">
+         <children>
+            <Label layoutX="8.0" layoutY="6.0" text="Total Price:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="261.0" layoutY="6.0" text="ETA:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="125.0" layoutY="6.0" text="\$00.00" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>
