@@ -21,6 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
+
 public class Main extends Application {
 
     //TODO: OPTIONAL: SHOW ETA AND PRICE OF TICKET IN GUI BEFORE BOOKING
@@ -136,7 +138,6 @@ public class Main extends Application {
 
     //TODO: PROVIDE ERROR HANDLING FOR EACH FIELD
     //TODO: RESET ALL FIELDS AND CREATE A POPUP SAYING THANKS FOR BOOKING WITH US
-    //TODO: ADD printTicket METHOD IN THIS METHOD
     //Creates Passenger and Booking ID
     public void btnEventHandler() {
         button.setOnAction(event -> {
@@ -154,8 +155,12 @@ public class Main extends Application {
 
             String confirmedTicket=dao.printTicket(passenger,boardingPass,schedule);
 
+            //Logging to console
+            LOGGER.info(confirmedTicket);
+
             ap.setVisible(true);
             ticket.setText(confirmedTicket);
+
 
         });
     }
