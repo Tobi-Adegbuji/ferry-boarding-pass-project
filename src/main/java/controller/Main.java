@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.java.dao.Dao;
 import main.java.dao.DataBootStrap;
@@ -47,6 +48,11 @@ public class Main extends Application {
     private DatePicker datePicker;
     @FXML
     private Button button;
+    @FXML
+    private Label ticket;
+    @FXML
+    private AnchorPane ap;
+
 
     private final Dao dao = new Dao();
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -145,6 +151,11 @@ public class Main extends Application {
             BoardingPass boardingPass = new BoardingPass(passenger, schedule);
 
             dao.createEntity(boardingPass);
+
+            String confirmedTicket=dao.printTicket(passenger,boardingPass,schedule);
+
+            ap.setVisible(true);
+            ticket.setText(confirmedTicket);
 
         });
     }

@@ -1,0 +1,12 @@
+Passenger Name: Kai
+Phone Number: 2233223
+Email: kai@kkk.com
+Gender: FEMALE
+Age: 33
+Ticket Number: 7
+Date: 2020-11-04
+Departure Time: 18:00
+Arrival Time: 18:45
+Origin: St. Catherines Island
+Destination: Sapelo Island
+Price: $11.325001
