@@ -140,8 +140,12 @@ public class Main extends Application {
                     (name.getText(),email.getText(),phoneNumber.getText(),gender,Integer.parseInt(age.getText()));
             dao.createEntity(passenger);
 
-            dao.createEntity(new BoardingPass
-                    (passenger,dao.retrieveSchedule(originChoiceBox.getValue(),destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue())));
+            Schedule schedule = dao.retrieveSchedule(originChoiceBox.getValue(),destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
+
+            BoardingPass boardingPass = new BoardingPass(passenger, schedule);
+
+            dao.createEntity(boardingPass);
+
         });
     }
 

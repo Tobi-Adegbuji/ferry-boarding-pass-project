@@ -96,7 +96,6 @@ public class Dao {
 
     public void printTicket(long id){
         BoardingPass bp=getTicket(id);
-
         Schedule ss=bp.getSchedule();
         try{
             Files.writeString(filePath,"Ticket Number: "+id+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
