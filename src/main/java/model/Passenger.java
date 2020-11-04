@@ -76,4 +76,17 @@ public class Passenger {
     public void setAge(int age) {
         this.age = age;
     }
+
+
+    @Override
+    public String toString() {
+        return "Passenger{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                '}';
+    }
 }

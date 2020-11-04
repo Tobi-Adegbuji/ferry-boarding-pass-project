@@ -24,19 +24,19 @@
                       <Font size="20.0" />
                   </font>
               </Label>
-              <TextField layoutX="52.0" layoutY="97.0" promptText="John Doe" />
+              <TextField fx:id="name" layoutX="52.0" layoutY="97.0" promptText="Enter Name" />
               <Label layoutX="52.0" layoutY="211.0" prefHeight="38.0" prefWidth="149.0" text="Phone Number" textFill="WHITE">
                   <font>
                       <Font size="20.0" />
                   </font>
               </Label>
-              <TextField layoutX="52.0" layoutY="249.0" promptText="000-000-0000" />
+              <TextField fx:id="phoneNumber" layoutX="52.0" layoutY="249.0" promptText="000-000-0000" />
               <Label layoutX="52.0" layoutY="134.0" prefHeight="38.0" prefWidth="133.0" text="Email" textFill="WHITE">
                   <font>
                       <Font size="20.0" />
                   </font>
               </Label>
-              <TextField layoutX="52.0" layoutY="172.0" promptText="johndoe@example.com" />
+              <TextField fx:id="email" layoutX="52.0" layoutY="172.0" promptText="Enter Email" />
               <Label layoutX="249.0" layoutY="59.0" prefHeight="38.0" prefWidth="133.0" text="Gender" textFill="WHITE">
                   <font>
                       <Font size="20.0" />
@@ -48,13 +48,13 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField layoutX="241.0" layoutY="172.0" promptText="21" />
-            <Button layoutX="275.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
+            <TextField fx:id="age" layoutX="241.0" layoutY="172.0" promptText="Enter Age" />
+            <Button fx:id="button" layoutX="275.0" layoutY="385.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <DatePicker layoutX="241.0" layoutY="249.0" prefHeight="25.0" prefWidth="150.0" promptText="Choose a date" showWeekNumbers="true" />
+            <DatePicker fx:id="datePicker" layoutX="241.0" layoutY="249.0" prefHeight="25.0" prefWidth="150.0" promptText="Choose a date" showWeekNumbers="true" />
             <Label layoutX="241.0" layoutY="282.0" prefHeight="38.0" prefWidth="133.0" text="Destination" textFill="WHITE">
                <font>
                   <Font size="20.0" />
@@ -71,7 +71,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="departureTime" disable="true" layoutX="52.0" layoutY="392.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="departureTimeChoiceBox" disable="true" layoutX="52.0" layoutY="392.0" prefWidth="150.0" />
             <Label layoutX="52.0" layoutY="282.0" prefHeight="38.0" prefWidth="133.0" text="Origin" textFill="WHITE">
                <font>
                   <Font size="20.0" />
@@ -91,7 +91,12 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="125.0" layoutY="6.0" text="\$00.00" textFill="WHITE">
+            <Label fx:id="price" layoutX="125.0" layoutY="6.0" text="\$00.00" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="arrivalTime" layoutX="319.0" layoutY="6.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
