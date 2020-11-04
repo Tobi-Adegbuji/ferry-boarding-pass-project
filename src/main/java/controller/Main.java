@@ -193,7 +193,7 @@ public class Main extends Application {
         //REGEX for name
         Pattern namePattern = Pattern.compile("^[a-zA-Z]*$",Pattern.CASE_INSENSITIVE);
         Matcher matcher = namePattern.matcher(name);
-        if(!matcher.matches())
+        if(!matcher.matches() || name.isEmpty())
             errorsList.add("Invalid Name");
 
         //REGEX for number
