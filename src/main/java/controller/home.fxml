@@ -110,8 +110,11 @@
       </ImageView>
       <AnchorPane fx:id="ap" layoutX="38.0" layoutY="53.0" prefHeight="460.0" prefWidth="258.0" style="-fx-background-color: white;" visible="false">
          <children>
-            <Label fx:id="ticket" layoutX="14.0" layoutY="162.0" prefHeight="270.0" prefWidth="227.0" text="Label" />
-            <ImageView fitHeight="88.0" fitWidth="195.0" layoutX="74.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+            <Label fx:id="ticket" layoutX="16.0" layoutY="176.0" lineSpacing="3.0" prefHeight="284.0" prefWidth="227.0" text="Label ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <ImageView fitHeight="152.0" fitWidth="149.0" layoutX="55.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/img/logo.jpg" />
                </image>

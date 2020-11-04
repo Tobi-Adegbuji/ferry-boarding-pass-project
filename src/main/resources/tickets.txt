@@ -1,12 +1,12 @@
-Passenger Name: Kai
-Phone Number: 2233223
-Email: kai@kkk.com
+Passenger Name: Jin Shark Mary Lane
+Phone Number: 6787903074
+Email: jhin@gmail.com
 Gender: FEMALE
-Age: 33
+Age: 35
 Ticket Number: 7
 Date: 2020-11-04
-Departure Time: 18:00
-Arrival Time: 18:45
+Departure Time: 11:00
+Arrival Time: 13:00
 Origin: St. Catherines Island
-Destination: Sapelo Island
-Price: $11.325001
+Destination: Little Tybee Island
+Price: $19.3125
