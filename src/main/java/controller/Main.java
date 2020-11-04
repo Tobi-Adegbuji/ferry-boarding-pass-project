@@ -151,27 +151,33 @@ public class Main extends Application {
     //Creates Passenger and Booking ID
     public void btnEventHandler() {
         button.setOnAction(event -> {
+            try {
+                if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
+                        genderChoiceBox.getValue(), datePicker.getValue().toString(), originChoiceBox.getValue(),
+                        destinationChoiceBox.getValue(),
+                        departureTimeChoiceBox.getValue())) {
+                    Gender gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
 
-            if(isValid(name.getText(),phoneNumber.getText(),email.getText(),age.getText())){
-            Gender gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
+                    Passenger passenger = new Passenger
+                            (name.getText(), email.getText(), phoneNumber.getText(), gender, Integer.parseInt(age.getText()));
+                    dao.createEntity(passenger);
 
-            Passenger passenger = new Passenger
-                    (name.getText(),email.getText(),phoneNumber.getText(),gender,Integer.parseInt(age.getText()));
-            dao.createEntity(passenger);
+                    Schedule schedule = dao.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
 
-            Schedule schedule = dao.retrieveSchedule(originChoiceBox.getValue(),destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
+                    BoardingPass boardingPass = new BoardingPass(passenger, schedule);
 
-            BoardingPass boardingPass = new BoardingPass(passenger, schedule);
+                    dao.createEntity(boardingPass);
 
-            dao.createEntity(boardingPass);
+                    String confirmedTicket = dao.printTicket(passenger, boardingPass, schedule);
 
-            String confirmedTicket=dao.printTicket(passenger,boardingPass,schedule);
+                    //Logging to console
+                    LOGGER.info(confirmedTicket);
 
-            //Logging to console
-            LOGGER.info(confirmedTicket);
-
-            ap.setVisible(true);
-            ticket.setText(confirmedTicket);
+                    ap.setVisible(true);
+                    ticket.setText(confirmedTicket);
+                }
+                }catch(Exception e){
+                errorsList.add("Please fill in every box.");
             }
 
             for(int i = 0; i < errorsList.size(); i++){
@@ -180,15 +186,17 @@ public class Main extends Application {
 
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(error);
-            alert.showAndWait();
-
+            if(!errorsList.isEmpty()) {
+                alert.showAndWait();
+            }
             errorsList.clear();
             error = "";
 
         });
     }
 
-    public boolean isValid(String name, String phoneNumber, String email, String age){
+    public boolean isValid(String name, String phoneNumber, String email, String age,String gender, String date,String origin,
+                           String destination, String departureTime){
 
         //REGEX for name
         Pattern namePattern = Pattern.compile("^[a-zA-Z]*$",Pattern.CASE_INSENSITIVE);
@@ -208,6 +216,7 @@ public class Main extends Application {
         if(!matcher3.matches())
             errorsList.add("Invalid Email");
 
+
         //Exception Handling for age
         try{
         if(Integer.parseInt(age) <= 0 || Integer.parseInt(age) >= 130)
@@ -217,7 +226,35 @@ public class Main extends Application {
             errorsList.add("Invalid Age");
         }
 
+
+        //Exception Handling for gender
+        if(gender.isEmpty()){
+            errorsList.add("Invalid Gender");
+        }
+
+        //Exception Handling for origin
+        if(origin.isEmpty()){
+            errorsList.add("Invalid Origin Location");
+        }
+
+        //Exception Handling for destination
+        if(destination.isEmpty()){
+            errorsList.add("Invalid Destination");
+        }
+
+        //Exception Handling for date
+        if(date.toString().isEmpty()){
+            errorsList.add("Invalid Travel date");
+        }
+
+        //Exception Handling for time
+        if(departureTime.isEmpty()){
+            errorsList.add("Invalid Departure time");
+        }
+
         return errorsList.isEmpty();
+
+
 
     }
 
