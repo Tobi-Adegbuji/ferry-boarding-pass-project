@@ -15,6 +15,10 @@ public class Passenger {
     Gender gender;
     int age;
 
+    public Passenger(){
+
+    }
+
     public Passenger(String name, String email, String phoneNumber, Gender gender, int age) {
         this.name = name;
         this.email = email;

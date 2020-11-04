@@ -1,7 +1,7 @@
 package main.java.model;
 
 
-import main.java.conditions.FI_Objects;
+import main.java.fi_objects.FI_Objects;
 
 import javax.persistence.*;
 
