@@ -23,6 +23,10 @@ public class BoardingPass {
         return schedule;
     }
 
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
     public float getPrice() {
         return price;
     }
