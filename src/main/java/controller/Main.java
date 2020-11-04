@@ -20,6 +20,12 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.IntStream;
+
+import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
 public class Main extends Application {
 
@@ -53,8 +59,14 @@ public class Main extends Application {
     @FXML
     private AnchorPane ap;
 
+    Alert alert;
+
+    private ArrayList<String> errorsList = new ArrayList<>();
+    String error = "";
+
 
     private final Dao dao = new Dao();
+
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
     ObservableList<String> locationsList = FXCollections
             .observableArrayList("Sapelo Island", "St. Catherines Island", "Little Tybee Island");
@@ -136,10 +148,11 @@ public class Main extends Application {
 
     //TODO: PROVIDE ERROR HANDLING FOR EACH FIELD
     //TODO: RESET ALL FIELDS AND CREATE A POPUP SAYING THANKS FOR BOOKING WITH US
-    //TODO: ADD printTicket METHOD IN THIS METHOD
     //Creates Passenger and Booking ID
     public void btnEventHandler() {
         button.setOnAction(event -> {
+
+            if(isValid(name.getText(),phoneNumber.getText(),email.getText(),age.getText())){
             Gender gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
 
             Passenger passenger = new Passenger
@@ -154,10 +167,58 @@ public class Main extends Application {
 
             String confirmedTicket=dao.printTicket(passenger,boardingPass,schedule);
 
+            //Logging to console
+            LOGGER.info(confirmedTicket);
+
             ap.setVisible(true);
             ticket.setText(confirmedTicket);
+            }
+
+            for(int i = 0; i < errorsList.size(); i++){
+                error += errorsList.get(i) + "\n";
+            }
+
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText(error);
+            alert.showAndWait();
+
+            errorsList.clear();
+            error = "";
 
         });
+    }
+
+    public boolean isValid(String name, String phoneNumber, String email, String age){
+
+        //REGEX for name
+        Pattern namePattern = Pattern.compile("^[a-zA-Z]*$",Pattern.CASE_INSENSITIVE);
+        Matcher matcher = namePattern.matcher(name);
+        if(!matcher.matches() || name.isEmpty())
+            errorsList.add("Invalid Name");
+
+        //REGEX for number
+        Pattern phonePattern = Pattern.compile("^\\d{10}$");
+        Matcher matcher2 = phonePattern.matcher(phoneNumber);
+        if(!matcher2.matches())
+            errorsList.add("Invalid Phone Number");
+
+        //REGEX for email
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher3 = emailPattern.matcher(email);
+        if(!matcher3.matches())
+            errorsList.add("Invalid Email");
+
+        //Exception Handling for age
+        try{
+        if(Integer.parseInt(age) <= 0 || Integer.parseInt(age) >= 130)
+            errorsList.add("Invalid Age");
+        }
+        catch (Exception e){
+            errorsList.add("Invalid Age");
+        }
+
+        return errorsList.isEmpty();
+
     }
 
 

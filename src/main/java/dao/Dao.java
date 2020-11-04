@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Dao {
-    public static Path filePath= Paths.get("C:\\Users\\kai\\Desktop\\Java prymid\\ferry-boarding-pass-project\\src\\main\\resources\\tickets.txt");
+    public static Path filePath = Paths.get(System.getProperty("user.dir")+ "\\src\\main\\resources\\tickets.txt");
 
 
     SessionFactory sessionFactory = new Configuration().configure("main/resources/hibernate.cfg.xml")
