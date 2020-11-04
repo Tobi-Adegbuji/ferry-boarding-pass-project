@@ -80,7 +80,7 @@ public class Dao {
 
 
 
-    public Schedule getTicket(long id){
+    public BoardingPass getTicket(long id){
         try{
             final Session session=sessionFactory.openSession();
             session.beginTransaction();
