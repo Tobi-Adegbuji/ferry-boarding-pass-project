@@ -95,4 +95,18 @@ public class Schedule {
     public void setFerry(Ferry ferry) {
         this.ferry = ferry;
     }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + id +
+                ", date=" + date +
+                ", origin='" + origin + '\'' +
+                ", destination='" + destination + '\'' +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", originalPrice=" + originalPrice +
+                ", ferry=" + ferry +
+                '}';
+    }
 }

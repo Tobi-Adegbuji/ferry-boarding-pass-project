@@ -96,9 +96,9 @@ public class Dao {
 
     public void printTicket(long id){
         BoardingPass bp=getTicket(id);
-
         Schedule ss=bp.getSchedule();
         try{
+
             Files.writeString(filePath,"Ticket Number: "+id+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Date: "+ss.getDate().toString()+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Departure Time: "+ss.getDepartureTime().toString()+" ",StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
