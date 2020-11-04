@@ -19,6 +19,16 @@ public class BoardingPass {
         public BoardingPass() {
         }
 
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+
+
     public BoardingPass(Passenger passenger, Schedule schedule) {
         this.passenger = passenger;
         this.schedule = schedule;

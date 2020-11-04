@@ -38,27 +38,31 @@ public class Dao {
         }
     }
 
-    public Schedule  getTicket( long id){
+    public BoardingPass  getTicket( long id){
         try{
             final Session session=sessionFactory.openSession();
             session.beginTransaction();
-            Schedule ss=session.get(Schedule.class,id);
+            BoardingPass bp=session.get(BoardingPass.class,id);
             session.getTransaction().commit();
-            return ss;
+            return bp;
 
         }finally{
             System.out.println("read entity error");
         }
     }
 
+
     public void printTicket(long id){
-        Schedule ss=getTicket(id);
+        BoardingPass bp=getTicket(id);
+
+        Schedule ss=bp.getSchedule();
         try{
+            Files.writeString(filePath,"Ticket Number: "+id+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Date: "+ss.getDate().toString()+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Departure Time: "+ss.getDeparture().toString()+" ",StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Arrival Time: "+ss.getArrivalTime().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Origin: "+ss.getOrigin().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-            Files.writeString(filePath,"Original Price: "+ss.getOriginalPrice()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+            Files.writeString(filePath,"Price: "+bp.getPrice()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
         }catch(IOException e){
             System.out.println("IO exception");
         }
