@@ -3,21 +3,22 @@ package main.java.model;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 @Entity
 public class Schedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
+    //TODO: MOVE THE DATE COLUMN IN THE DATABASE TO THE BOARDING PASS COLUMN
     LocalDate date;
 
     private String origin;
 
     private String destination;
 
-    private LocalTime departure;
+    private LocalTime departureTime;
 
     private LocalTime arrivalTime;
 
@@ -33,7 +34,7 @@ public class Schedule {
         this.date = date;
         this.origin = origin;
         this.destination = destination;
-        this.departure = departure;
+        this.departureTime = departure;
         this.arrivalTime = estimatedTimeOfArrival;
         this.originalPrice = originalPrice;
         this.ferry = ferry;
@@ -63,12 +64,12 @@ public class Schedule {
         this.destination = destination;
     }
 
-    public LocalTime getDeparture() {
-        return departure;
+    public LocalTime getDepartureTime() {
+        return departureTime;
     }
 
-    public void setDeparture(LocalTime departure) {
-        this.departure = departure;
+    public void setDepartureTime(LocalTime departure) {
+        this.departureTime = departure;
     }
 
     public LocalTime getArrivalTime() {

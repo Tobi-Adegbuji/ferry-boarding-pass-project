@@ -14,6 +14,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Dao {
     public static Path filePath= Paths.get("C:\\Users\\kai\\Desktop\\Java prymid\\ferry-boarding-pass-project\\src\\main\\resources\\tickets.txt");
@@ -26,6 +29,7 @@ public class Dao {
             .addAnnotatedClass(Schedule.class)
             .buildSessionFactory();
 
+    //Creates an entity of any type
     public <T> void createEntity(T entity){
         try{
             final Session session =  sessionFactory.openSession();
@@ -38,7 +42,45 @@ public class Dao {
         }
     }
 
-    public Schedule  getTicket( long id){
+    //Grabs available times based on origin & destination
+    public List getScheduleTimes (String origin, String destination){
+        final Session session =  sessionFactory.openSession();
+        session.beginTransaction();
+        List list = session
+                .createQuery("SELECT s.departureTime FROM Schedule s WHERE s.origin =: p1 AND s.destination =: p2")
+                .setParameter("p1",origin)
+                .setParameter("p2",destination)
+                .getResultList();
+        session.getTransaction().commit();
+        session.close();
+        //returns localTimes as strings
+        return (List) list.stream().map(time -> time.toString()).collect(Collectors.toList());
+
+    }
+
+    //Grabs available times based on origin & destination
+    public Schedule retrieveSchedule (String origin,String destination, String departureTime){
+        try {
+            final Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            Schedule schedule = (Schedule) session
+                    .createQuery("FROM Schedule s WHERE s.origin =: p1 AND s.destination =: p2 AND s.departureTime = '" + LocalTime.parse(departureTime) + "'")
+                    .setParameter("p1", origin)
+                    .setParameter("p2", destination)
+                    .getSingleResult();
+            session.getTransaction().commit();
+            session.close();
+            return schedule;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+    public Schedule getTicket(long id){
         try{
             final Session session=sessionFactory.openSession();
             session.beginTransaction();
@@ -55,7 +97,7 @@ public class Dao {
         Schedule ss=getTicket(id);
         try{
             Files.writeString(filePath,"Date: "+ss.getDate().toString()+" ", StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
-            Files.writeString(filePath,"Departure Time: "+ss.getDeparture().toString()+" ",StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
+            Files.writeString(filePath,"Departure Time: "+ss.getDepartureTime().toString()+" ",StandardCharsets.UTF_16, StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Arrival Time: "+ss.getArrivalTime().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Origin: "+ss.getOrigin().toString()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
             Files.writeString(filePath,"Original Price: "+ss.getOriginalPrice()+" ",StandardOpenOption.CREATE,StandardOpenOption.APPEND);
