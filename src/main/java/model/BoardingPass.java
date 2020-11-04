@@ -31,7 +31,9 @@ public class BoardingPass {
         return price;
     }
 
-
+    public long getBoardingPassNum() {
+        return boardingPassNum;
+    }
 
     public BoardingPass(Passenger passenger, Schedule schedule) {
         this.passenger = passenger;
