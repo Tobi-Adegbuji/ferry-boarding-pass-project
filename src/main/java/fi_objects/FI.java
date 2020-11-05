@@ -17,7 +17,7 @@ public class FI {
      static public Predicate<Passenger> equalsFemale = person -> person.getGender().equals(Gender.FEMALE);
      static public Predicate<Passenger> greaterThan59 = person -> person.getAge() >= 60;
      static public Predicate <Passenger> lessThan13 = person -> person.getAge() <= 12;
-     static public BiFunction<Float,Float,Float> calculatePrice = (price,discount) -> (float) (price - (price *  discount));
+     static public BiFunction<Float,Float,Float> discountPrice = (price, discount) -> (float) (price - (price *  discount));
 
 
 
@@ -28,6 +28,7 @@ public class FI {
      static public Predicate<List<String>> isEmpty = list -> list.stream()
              .anyMatch(value -> value.replaceAll(" ","").isEmpty());
 
+     //Adds error message to list if matcher doesnt match
      static public TriConsumer<List<String>, Matcher, String> isNotMatching = (list, matcher, errorMessage) -> {
           if(!matcher.matches())
                list.add(errorMessage);
