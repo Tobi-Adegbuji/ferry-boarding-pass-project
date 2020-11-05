@@ -9,61 +9,46 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.java.dao.Dao;
 import main.java.dao.DataBootStrap;
+import main.java.fi_objects.FI;
 import main.java.model.*;
 
 import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
-
 public class Main extends Application {
-
-    //TODO: OPTIONAL: SHOW ETA AND PRICE OF TICKET IN GUI BEFORE BOOKING
     @FXML
-    private Label arrivalTime;
+    private Label arrivalTime, price, ticket;
     @FXML
-    private Label price;
+    private TextField name, phoneNumber, email, age;
     @FXML
-    private TextField name;
+    private ChoiceBox<String> originChoiceBox, destinationChoiceBox, genderChoiceBox, departureTimeChoiceBox;
     @FXML
-    private TextField phoneNumber;
-    @FXML
-    private TextField email;
-    @FXML
-    private TextField age;
-    @FXML
-    private ChoiceBox<String> originChoiceBox;
-    @FXML
-    private ChoiceBox<String> destinationChoiceBox;
-    @FXML
-    private ChoiceBox<String> genderChoiceBox;
-    @FXML
-    private ChoiceBox<String> departureTimeChoiceBox;
+    private AnchorPane ticketAnchorPane, formAnchorPane, priceBarAnchorPane;
     @FXML
     private DatePicker datePicker;
     @FXML
+    private ImageView logo;
+    @FXML
     private Button button;
-    @FXML
-    private Label ticket;
-    @FXML
-    private AnchorPane ap;
 
-    Alert alert;
+    private Animations animations = new Animations();
 
-    private ArrayList<String> errorsList = new ArrayList<>();
+    private Alert alert;
+
+    private final ArrayList<String> errorsList = new ArrayList<>();
     String error = "";
-
 
     private final Dao dao = new Dao();
 
@@ -95,7 +80,7 @@ public class Main extends Application {
         initChoiceBoxes();
         btnEventHandler();
         //Loading data in database
-        DataBootStrap.bootStrapData();
+        DataBootStrap.bootstrapData();
 
     }
 
@@ -114,11 +99,11 @@ public class Main extends Application {
         //Adds times to departure time choice box
         originChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
-                    if(newValue == null)
+                    if (newValue == null)
                         destinationChoiceBox.setValue(null);
-                     else if (!newValue.equals(destinationChoiceBox.getValue()) && destinationChoiceBox.getValue() != null) {
+                    else if (!newValue.equals(destinationChoiceBox.getValue()) && destinationChoiceBox.getValue() != null) {
                         departureTimeChoiceBox.setDisable(false);
-                        addScheduleTimes(destinationChoiceBox.getValue(),originChoiceBox.getValue());
+                        addScheduleTimes(destinationChoiceBox.getValue(), originChoiceBox.getValue());
                     } else {
                         departureTimeChoiceBox.setDisable(true);
                     }
@@ -126,13 +111,13 @@ public class Main extends Application {
 
         destinationChoiceBox.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
-                    if(newValue != null){
-                    if (!newValue.equals(originChoiceBox.getValue()) && originChoiceBox.getValue() != null) {
-                        departureTimeChoiceBox.setDisable(false);
-                        addScheduleTimes(originChoiceBox.getValue(),destinationChoiceBox.getValue());
-                    } else {
-                        departureTimeChoiceBox.setDisable(true);
-                    }
+                    if (newValue != null) {
+                        if (!newValue.equals(originChoiceBox.getValue()) && originChoiceBox.getValue() != null) {
+                            departureTimeChoiceBox.setDisable(false);
+                            addScheduleTimes(originChoiceBox.getValue(), destinationChoiceBox.getValue());
+                        } else {
+                            departureTimeChoiceBox.setDisable(true);
+                        }
                     }
                 });
     }
@@ -140,8 +125,7 @@ public class Main extends Application {
 
     //Grabs times from database based on destinations and origin
     public void addScheduleTimes(String origin, String destination) {
-        ObservableList<String> timesList = FXCollections.observableList(dao.getScheduleTimes(origin,destination));
-        System.out.println(timesList);
+        var timesList = FXCollections.observableList(dao.getScheduleTimes(origin, destination));
         departureTimeChoiceBox.setItems(timesList);
     }
 
@@ -151,119 +135,82 @@ public class Main extends Application {
     //Creates Passenger and Booking ID
     public void btnEventHandler() {
         button.setOnAction(event -> {
-            try {
-                if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
-                        genderChoiceBox.getValue(), datePicker.getValue().toString(), originChoiceBox.getValue(),
-                        destinationChoiceBox.getValue(),
-                        departureTimeChoiceBox.getValue())) {
-                    Gender gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
 
-                    Passenger passenger = new Passenger
-                            (name.getText(), email.getText(), phoneNumber.getText(), gender, Integer.parseInt(age.getText()));
-                    dao.createEntity(passenger);
+            if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
+                    genderChoiceBox.getValue(), datePicker.getValue(), originChoiceBox.getValue(),
+                    destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue())) {
+                var gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
 
-                    Schedule schedule = dao.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
+                var passenger = new Passenger
+                        (name.getText(), email.getText(), phoneNumber.getText(), gender, Integer.parseInt(age.getText()));
+                dao.createEntity(passenger);
 
-                    BoardingPass boardingPass = new BoardingPass(passenger, schedule);
+                var schedule = dao.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
 
-                    dao.createEntity(boardingPass);
+                var boardingPass = new BoardingPass(passenger, schedule, datePicker.getValue());
 
-                    String confirmedTicket = dao.printTicket(passenger, boardingPass, schedule);
+                dao.createEntity(boardingPass);
 
-                    //Logging to console
-                    LOGGER.info(confirmedTicket);
+                var confirmedTicket = dao.printTicket(passenger, boardingPass, schedule);
 
-                    ap.setVisible(true);
-                    ticket.setText(confirmedTicket);
-                }
-                }catch(Exception e){
-                errorsList.add("Please fill in every box.");
+                ticketAnchorPane.setVisible(true);
+                ticket.setText(confirmedTicket);
             }
+            //Creates Single String out of error List
+            IntStream.range(0,errorsList.size()).forEach(i -> error += errorsList.get(i) + "\n");
 
-            for(int i = 0; i < errorsList.size(); i++){
-                error += errorsList.get(i) + "\n";
-            }
-
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(error);
-            if(!errorsList.isEmpty()) {
+            if (!errorsList.isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText(error);
                 alert.showAndWait();
             }
+
             errorsList.clear();
             error = "";
 
         });
     }
 
-    public boolean isValid(String name, String phoneNumber, String email, String age,String gender, String date,String origin,
-                           String destination, String departureTime){
+    public boolean isValid(String name, String phoneNumber, String email, String age, String gender, LocalDate date, String origin,
+                           String destination, String departureTime) {
 
+        if (FI.isEmpty.test(Arrays.asList(name, phoneNumber, email, age)) ||
+                FI.isNull.test(Arrays.asList(gender, origin, destination, departureTime)) || date == null) {
+            errorsList.add("Please fill in all the boxes.");
+            return false;
+        }
         //REGEX for name
-        Pattern namePattern = Pattern.compile("^[a-zA-Z]*$",Pattern.CASE_INSENSITIVE);
-        Matcher matcher = namePattern.matcher(name);
-        if(!matcher.matches() || name.isEmpty())
-            errorsList.add("Invalid Name");
-
+        var pattern = Pattern.compile("^[a-zA-Z]*$", Pattern.CASE_INSENSITIVE);
+        FI.isNotMatching.apply(errorsList,pattern.matcher(name.replaceAll(" ","")),"Invalid Name");
         //REGEX for number
-        Pattern phonePattern = Pattern.compile("^\\d{10}$");
-        Matcher matcher2 = phonePattern.matcher(phoneNumber);
-        if(!matcher2.matches())
-            errorsList.add("Invalid Phone Number");
-
+        pattern = Pattern.compile("^\\d{10}$");
+        FI.isNotMatching.apply(errorsList,pattern.matcher(phoneNumber),"Invalid Phone Number");
         //REGEX for email
-        Pattern emailPattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher3 = emailPattern.matcher(email);
-        if(!matcher3.matches())
-            errorsList.add("Invalid Email");
-
+        pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        FI.isNotMatching.apply(errorsList,pattern.matcher(email),"Invalid Email");
 
         //Exception Handling for age
-        try{
-        if(Integer.parseInt(age) <= 0 || Integer.parseInt(age) >= 130)
+        try {
+            if (Integer.parseInt(age) <= 0 || Integer.parseInt(age) >= 130)
+                errorsList.add("Invalid Age");
+        } catch (Exception e) {
             errorsList.add("Invalid Age");
         }
-        catch (Exception e){
-            errorsList.add("Invalid Age");
+
+        if (errorsList.isEmpty()) {
+            formAnchorPane.setVisible(false);
+            priceBarAnchorPane.setVisible(false);
+            logo.setVisible(false);
+            return true;
         }
-
-
-        //Exception Handling for gender
-        if(gender.isEmpty()){
-            errorsList.add("Invalid Gender");
-        }
-
-        //Exception Handling for origin
-        if(origin.isEmpty()){
-            errorsList.add("Invalid Origin Location");
-        }
-
-        //Exception Handling for destination
-        if(destination.isEmpty()){
-            errorsList.add("Invalid Destination");
-        }
-
-        //Exception Handling for date
-        if(date.toString().isEmpty()){
-            errorsList.add("Invalid Travel date");
-        }
-
-        //Exception Handling for time
-        if(departureTime.isEmpty()){
-            errorsList.add("Invalid Departure time");
-        }
-
-        return errorsList.isEmpty();
-
-
-
+        else
+        return false;
     }
-
 
     //Formats date from users
     public LocalDate formatDate(String date) {
         return LocalDate.parse(date, dateFormatter);
     }
-
 
     public void disableDays() {
         //Disabling days on datePicker that our prior to current day
@@ -278,7 +225,5 @@ public class Main extends Application {
             }
         });
     }
-
-
 
 }
