@@ -11,6 +11,7 @@ public class Ferry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String ferryName;
 
     public Ferry() {
