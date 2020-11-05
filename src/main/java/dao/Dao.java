@@ -1,11 +1,10 @@
 package main.java.dao;
 
-import main.java.fi_objects.TriConsumer;
+import main.java.fi_objects.FI;
 import main.java.model.BoardingPass;
 import main.java.model.Ferry;
 import main.java.model.Passenger;
 import main.java.model.Schedule;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.function.*;
 import java.util.stream.Collectors;
 
 import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
@@ -40,34 +38,37 @@ public class Dao {
             session.save(entity);
             session.getTransaction().commit();
             session.close();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
         }
     }
 
-    public Function<String, List> retrieveItem = query -> {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List list = (List) session.createQuery(query).getResultList();
-        session.getTransaction().commit();
-        session.close();
-        return list;
-    };
+
 
     //Grabs available times based on origin & destination
     public List<String> getScheduleTimes(String origin, String destination) {
-        var list = retrieveItem.apply("SELECT s.departureTime FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "'");
+        var list = FI.retrieveList
+                .apply("SELECT s.departureTime FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "'",
+                        sessionFactory.openSession()).get();
+
         return (List<String>) list.stream().map(Object::toString).collect(Collectors.toList());
     }
 
     //Grabs available times based on origin & destination
     public Schedule retrieveSchedule(String origin, String destination, String departureTime) {
-        var list = retrieveItem.apply("FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "' AND s.departureTime = '" + LocalTime.parse(departureTime) + "'");
+        var list = FI.retrieveList
+                .apply("FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "' AND s.departureTime = '"
+                                + LocalTime.parse(departureTime) + "'", sessionFactory.openSession()).get();
+
         return (Schedule) list.get(0);
     }
 
     public String printTicket(Passenger p, BoardingPass bp, Schedule ss) {
 
-        var ticketDetails = "Passenger Name: " + p.getName() + "\n" +
+        var ticketDetails = "";
+
+        if(FI.isNull.negate().test(List.of(p,bp,ss)))
+         ticketDetails = "Passenger Name: " + p.getName() + "\n" +
                 "Phone Number: " + p.getPhoneNumber() + "\n" +
                 "Email: " + p.getEmail() + "\n" +
                 "Gender: " + p.getGender() + "\n" +
@@ -83,7 +84,7 @@ public class Dao {
         try {
             Files.writeString(filePath, ticketDetails);
         } catch (IOException e) {
-            LOGGER.error("Error writing out");
+            LOGGER.error("IO Exception");
         }
         return ticketDetails;
     }
