@@ -23,7 +23,12 @@ public class Passenger {
     public Passenger(){
 
     }
-    
+
+    public Passenger(Gender gender, int age) {
+        this.gender = gender;
+        this.age = age;
+    }
+
     public Passenger(String name, String email, String phoneNumber, Gender gender, int age) {
         this.name = name;
         this.email = email;

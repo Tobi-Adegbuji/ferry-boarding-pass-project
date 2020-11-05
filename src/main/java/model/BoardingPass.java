@@ -44,21 +44,7 @@ public class BoardingPass {
         this.passenger = passenger;
         this.schedule = schedule;
         this.date = date;
-        price = schedule.getOriginalPrice();
-        calculatePrice();
-    }
-
-    public void calculatePrice() {
-        if (FI.equalsFemale.and(FI.lessThan13).test(this.passenger))
-            price = FI.discountPrice.apply(price, .75f);
-        else if (FI.equalsFemale.and(FI.greaterThan59).test(this.passenger))
-            price = FI.discountPrice.apply(price, .85f);
-        else if (FI.lessThan13.test(this.passenger))
-            price = FI.discountPrice.apply(price, .50f);
-        else if (FI.greaterThan59.test(this.passenger))
-            price = FI.discountPrice.apply(price, .60f);
-        else if (FI.equalsFemale.test(this.passenger))
-            price = FI.discountPrice.apply(price, .25f);
+        price = FI.calculatePrice.apply(schedule.getOriginalPrice(),passenger);
     }
 
 }
