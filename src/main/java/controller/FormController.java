@@ -2,6 +2,7 @@ package main.java.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -32,7 +33,7 @@ public class FormController {
     @FXML
     private ImageView logo;
     @FXML
-    private Button button;
+    private Button bookBtn, calculateBtn,reRunButton;
 
     private final Animations animations = new Animations();
 
@@ -40,25 +41,28 @@ public class FormController {
 
     private String errorMessage = "";
 
-    private final Database dao = new Database();
+    private final Database database = new Database();
+
+    private boolean canGeneratePrice = false;
 
     ObservableList<String> locationsList = FXCollections
             .observableArrayList("Sapelo Island", "St. Catherines Island", "Little Tybee Island");
 
-
-
+    boolean b;
 
     @FXML
     public void initialize() {
         disableDays();
         initChoiceBoxes();
-        btnEventHandler();
+        initBookBtn();
+        initCalculateBtn();
         //Loading data in database
         DataBootStrap.bootstrapData();
         animations.fadeIn(logo, 4000);
-        animations.fadeIn(priceBarAnchorPane,4000);
-        animations.fadeIn(formAnchorPane,4000);
+        animations.fadeIn(priceBarAnchorPane, 4000);
+        animations.fadeIn(formAnchorPane, 4000);
     }
+
 
     //Sets up choice boxes
     public void initChoiceBoxes() {
@@ -100,14 +104,30 @@ public class FormController {
 
     //Grabs times from database based on destinations and origin
     public void addScheduleTimes(String origin, String destination) {
-        var timesList = FXCollections.observableList(dao.getScheduleTimes(origin, destination));
+        var timesList = FXCollections.observableList(database.getScheduleTimes(origin, destination));
         departureTimeChoiceBox.setItems(timesList);
     }
 
 
-    //Creates Passenger and Booking ID
-    public void btnEventHandler() {
-        button.setOnAction(event -> {
+    public void initCalculateBtn() {
+        calculateBtn.setOnAction(event -> {
+            if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
+                    genderChoiceBox.getValue(), datePicker.getValue(), originChoiceBox.getValue(),
+                    destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue())) {
+
+                var gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
+                var schedule = database.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
+                arrivalTime.setText(schedule.getArrivalTime().toString());
+                var passenger = new Passenger(gender ,Integer.parseInt(age.getText()));
+                price.setText(String.format("%.2f",FI.calculatePrice.apply(schedule.getOriginalPrice(),passenger)));
+            }
+            hasErrors(errorsList);
+        });
+    }
+
+
+    public void initBookBtn() {
+        bookBtn.setOnAction(event -> {
             if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
                     genderChoiceBox.getValue(), datePicker.getValue(), originChoiceBox.getValue(),
                     destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue())) {
@@ -117,15 +137,15 @@ public class FormController {
                 var passenger = new Passenger
                         (name.getText(), email.getText(), phoneNumber.getText(), gender, Integer.parseInt(age.getText()));
 
-                dao.createEntity(passenger);
+                database.createEntity(passenger);
 
-                var schedule = dao.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
+                var schedule = database.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
 
                 var boardingPass = new BoardingPass(passenger, schedule, datePicker.getValue());
 
-                dao.createEntity(boardingPass);
+                database.createEntity(boardingPass);
 
-                var confirmedTicket = dao.printTicket(passenger, boardingPass, schedule);
+                var confirmedTicket = database.printTicket(passenger, boardingPass, schedule);
 
                 ticketAnchorPane.setVisible(true);
                 ticket.setText(confirmedTicket);
@@ -133,9 +153,8 @@ public class FormController {
                 formAnchorPane.setVisible(false);
                 priceBarAnchorPane.setVisible(false);
                 logo.setVisible(false);
+                calculateBtn.setVisible(false);
             }
-            //Creates Single String out of error List
-            IntStream.range(0,errorsList.size()).forEach(i -> errorMessage += errorsList.get(i) + "\n");
             hasErrors(errorsList);
         });
 
@@ -143,7 +162,8 @@ public class FormController {
 
 
     //Pops up alert box if there are errors.
-    public boolean hasErrors(List<String> errorsList){
+    public boolean hasErrors(List<String> errorsList) {
+        IntStream.range(0, errorsList.size()).forEach(i -> errorMessage += errorsList.get(i) + "\n");
         if (!errorsList.isEmpty()) {
             var alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText(errorMessage);
@@ -152,7 +172,7 @@ public class FormController {
             errorMessage = "";
             return true;
         }
-            return false;
+        return false;
     }
 
     //Checks validation of all user fields
@@ -166,17 +186,17 @@ public class FormController {
         }
         //REGEX for name
         var pattern = Pattern.compile("^[a-zA-Z]*$", Pattern.CASE_INSENSITIVE);
-        FI.isNotMatching.apply(errorsList,pattern.matcher(name.replaceAll(" ","")),"Invalid Name");
+        FI.isNotMatching.apply(errorsList, pattern.matcher(name.replaceAll(" ", "")), "Invalid Name");
         //REGEX for number
         pattern = Pattern.compile("^\\d{10}$");
-        FI.isNotMatching.apply(errorsList,pattern.matcher(phoneNumber),"Invalid Phone Number");
+        FI.isNotMatching.apply(errorsList, pattern.matcher(phoneNumber), "Invalid Phone Number");
         //REGEX for email
         pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-        FI.isNotMatching.apply(errorsList,pattern.matcher(email),"Invalid Email");
+        FI.isNotMatching.apply(errorsList, pattern.matcher(email), "Invalid Email");
 
 
         try {
-            if (Integer.parseInt(age) <= 0 || Integer.parseInt(age) >= 130)
+            if (Integer.parseInt(age) <= 0 || Integer.parseInt(age) > 130)
                 errorsList.add("Invalid Age");
         } catch (Exception e) {
             errorsList.add("Invalid Age");
@@ -196,6 +216,13 @@ public class FormController {
                 setDisable(empty || today.compareTo(localDate) > 0);
             }
         });
+    }
+
+    public  boolean reRun( ){
+        reRunButton.setOnAction(event->{
+                b=true;
+            });
+            return b;
     }
 
 }

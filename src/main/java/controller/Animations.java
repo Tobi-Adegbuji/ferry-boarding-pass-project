@@ -15,5 +15,17 @@ public class Animations {
         fade.play();
     }
 
+    public void fadeOut(Object object, double milliseconds, Node node){
+        FadeTransition fade = new FadeTransition();
+        fade.setDuration(Duration.millis(milliseconds));
+        fade.setFromValue(10);
+        fade.setToValue(0);
+        fade.setNode((Node)object);
+        fade.setOnFinished((event)->{
+
+        });
+        fade.play();
+    }
+
 
 }
