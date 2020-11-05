@@ -79,7 +79,7 @@ public class Database {
                 "Arrival Time: " + ss.getArrivalTime().toString() + "\n" +
                 "Origin: " + ss.getOrigin() + "\n" +
                 "Destination: " + ss.getDestination() + "\n" +
-                "Price: " + "$" + bp.getPrice();
+                 "Price: " + "$" + String.format("%.2f",bp.getPrice());
 
         try {
             Files.writeString(filePath, ticketDetails);

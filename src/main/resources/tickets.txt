@@ -1,12 +1,12 @@
-Passenger Name: Jihn
-Phone Number: 2343523527
-Email: njlk@gmail.com
-Gender: FEMALE
-Age: 11
+Passenger Name: John
+Phone Number: 6787903074
+Email: j@gmail.com
+Gender: MALE
+Age: 12
 Ticket Number: 7
-Date: 2020-11-27
-Departure Time: 11:00
-Arrival Time: 13:00
+Date: 2020-11-18
+Departure Time: 09:00
+Arrival Time: 11:00
 Origin: St. Catherines Island
 Destination: Little Tybee Island
-Price: $6.4375
+Price: $12.88
