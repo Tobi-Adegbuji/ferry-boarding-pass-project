@@ -79,7 +79,7 @@ public class Dao {
                 "Arrival Time: " + ss.getArrivalTime().toString() + "\n" +
                 "Origin: " + ss.getOrigin().toString() + "\n" +
                 "Destination: " + ss.getDestination().toString() + "\n" +
-                "Price: " + "$" + bp.getPrice();
+                "Price: " + "$" + String.format("%.2f",bp.getPrice());
 
         try {
             Files.writeString(filePath, ticketDetails);
