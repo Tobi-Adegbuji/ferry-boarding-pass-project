@@ -2,6 +2,7 @@ package main.java.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -32,7 +33,7 @@ public class FormController {
     @FXML
     private ImageView logo;
     @FXML
-    private Button bookBtn, calculateBtn;
+    private Button bookBtn, calculateBtn,reRunButton;
 
     private final Animations animations = new Animations();
 
@@ -47,6 +48,7 @@ public class FormController {
     ObservableList<String> locationsList = FXCollections
             .observableArrayList("Sapelo Island", "St. Catherines Island", "Little Tybee Island");
 
+    boolean b;
 
     @FXML
     public void initialize() {
@@ -214,6 +216,13 @@ public class FormController {
                 setDisable(empty || today.compareTo(localDate) > 0);
             }
         });
+    }
+
+    public  boolean reRun( ){
+        reRunButton.setOnAction(event->{
+                b=true;
+            });
+            return b;
     }
 
 }
