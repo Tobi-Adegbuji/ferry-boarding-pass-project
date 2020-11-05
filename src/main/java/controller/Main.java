@@ -9,11 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.text.Normalizer;
 
 public class Main extends Application {
+   static boolean reBook=false;
 
     public static void main(String[] args) {
-        launch(args);
+
+        FormController f=new FormController();
+        do {
+            launch(args);
+        }while(f.reRun());
     }
 
     @Override
@@ -26,6 +32,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
+        reBook=false;
     }
 
 }
