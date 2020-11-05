@@ -11,7 +11,7 @@ public class DataBootStrap {
 
     static public boolean bootstrapData() {
         try {
-            Dao dao = new Dao();
+            Database dao = new Database();
             Passenger passenger = new Passenger("John", "john@email.com", "6786789867", Gender.MALE, 15);
             Passenger passenger2 = new Passenger("Shelby", "shelby@email.com", "7707897865", Gender.FEMALE, 82);
             Passenger passenger3 = new Passenger("Rhonda", "rhonda@email.com", "1231231234", Gender.FEMALE, 11);

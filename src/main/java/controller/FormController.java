@@ -1,27 +1,17 @@
 package main.java.controller;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import main.java.dao.Dao;
+import main.java.dao.Database;
 import main.java.dao.DataBootStrap;
 import main.java.fi_objects.FI;
 import main.java.model.*;
 
-import java.io.File;
-import java.net.URL;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +40,7 @@ public class FormController {
 
     private String errorMessage = "";
 
-    private final Dao dao = new Dao();
+    private final Database dao = new Database();
 
     ObservableList<String> locationsList = FXCollections
             .observableArrayList("Sapelo Island", "St. Catherines Island", "Little Tybee Island");
@@ -115,14 +105,13 @@ public class FormController {
     }
 
 
-    //TODO: PROVIDE ERROR HANDLING FOR EACH FIELD
-    //TODO: RESET ALL FIELDS AND CREATE A POPUP SAYING THANKS FOR BOOKING WITH US
     //Creates Passenger and Booking ID
     public void btnEventHandler() {
         button.setOnAction(event -> {
             if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
                     genderChoiceBox.getValue(), datePicker.getValue(), originChoiceBox.getValue(),
                     destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue())) {
+
                 var gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
 
                 var passenger = new Passenger
@@ -171,7 +160,7 @@ public class FormController {
                            String destination, String departureTime) {
 
         if (FI.isEmpty.test(Arrays.asList(name, phoneNumber, email, age)) ||
-                FI.isNull.test(Arrays.asList(gender, origin, destination, departureTime)) || date == null) {
+                FI.isNull.test(Arrays.asList(gender, origin, destination, departureTime, date))) {
             errorsList.add("Please fill in all the boxes.");
             return false;
         }
