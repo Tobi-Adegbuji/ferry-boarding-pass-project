@@ -77,8 +77,8 @@ public class Dao {
                 "Date: " + bp.getDate().toString() + "\n" +
                 "Departure Time: " + ss.getDepartureTime().toString() + "\n" +
                 "Arrival Time: " + ss.getArrivalTime().toString() + "\n" +
-                "Origin: " + ss.getOrigin().toString() + "\n" +
-                "Destination: " + ss.getDestination().toString() + "\n" +
+                "Origin: " + ss.getOrigin() + "\n" +
+                "Destination: " + ss.getDestination() + "\n" +
                 "Price: " + "$" + bp.getPrice();
 
         try {
