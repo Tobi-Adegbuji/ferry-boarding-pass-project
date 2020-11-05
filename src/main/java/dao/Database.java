@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.hibernate.bytecode.BytecodeLogger.LOGGER;
 
-public class Dao {
+public class Database {
     public static Path filePath = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources\\tickets.txt");
 
 

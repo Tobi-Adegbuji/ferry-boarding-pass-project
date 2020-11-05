@@ -50,15 +50,15 @@ public class BoardingPass {
 
     public void calculatePrice() {
         if (FI.equalsFemale.and(FI.lessThan13).test(this.passenger))
-            price = FI.calculatePrice.apply(price, .75f);
+            price = FI.discountPrice.apply(price, .75f);
         else if (FI.equalsFemale.and(FI.greaterThan59).test(this.passenger))
-            price = FI.calculatePrice.apply(price, .85f);
+            price = FI.discountPrice.apply(price, .85f);
         else if (FI.lessThan13.test(this.passenger))
-            price = FI.calculatePrice.apply(price, .50f);
+            price = FI.discountPrice.apply(price, .50f);
         else if (FI.greaterThan59.test(this.passenger))
-            price = FI.calculatePrice.apply(price, .60f);
+            price = FI.discountPrice.apply(price, .60f);
         else if (FI.equalsFemale.test(this.passenger))
-            price = FI.calculatePrice.apply(price, .25f);
+            price = FI.discountPrice.apply(price, .25f);
     }
 
 }
