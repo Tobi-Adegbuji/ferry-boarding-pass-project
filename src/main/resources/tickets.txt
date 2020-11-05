@@ -1,12 +1,12 @@
-Passenger Name: kai
-Phone Number: 7204592888
-Email: kai@kai.com
-Gender: MALE
-Age: 32
+Passenger Name: John
+Phone Number: 6787903074
+Email: john@gmail.com
+Gender: FEMALE
+Age: 23
 Ticket Number: 7
-Date: 2020-11-04
+Date: 2020-11-24
 Departure Time: 11:00
 Arrival Time: 13:00
 Origin: St. Catherines Island
 Destination: Little Tybee Island
-Price: $25.75
+Price: $19.3125

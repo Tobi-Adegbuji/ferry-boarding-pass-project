@@ -1,31 +1,31 @@
 package main.java.model;
 
 
-import main.java.fi_objects.FI_Objects;
+import main.java.fi_objects.FI;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class BoardingPass {
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        private long boardingPassNum;
-        private float price;
-        @ManyToOne
-        private Passenger passenger;
-        @ManyToOne
-        Schedule schedule;
 
-        public BoardingPass() {
-        }
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long boardingPassNum;
 
-    public Schedule getSchedule() {
-        return schedule;
+    private float price;
+
+    private LocalDate date;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Passenger passenger;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    Schedule schedule;
+
+    public BoardingPass() {
     }
 
-    public Passenger getPassenger() {
-        return passenger;
-    }
 
     public float getPrice() {
         return price;
@@ -35,26 +35,32 @@ public class BoardingPass {
         return boardingPassNum;
     }
 
-    public BoardingPass(Passenger passenger, Schedule schedule) {
+    public LocalDate getDate() {
+        return date;
+    }
+
+
+    public BoardingPass(Passenger passenger, Schedule schedule, LocalDate date) {
         this.passenger = passenger;
         this.schedule = schedule;
+        this.date = date;
         price = schedule.getOriginalPrice();
         calculatePrice();
     }
 
-    public void calculatePrice(){
-        if(FI_Objects.equalsFemale.and(FI_Objects.lessThan13).test(this.passenger))
-            price = FI_Objects.calculatePrice.apply(price,.75f);
-        else if(FI_Objects.equalsFemale.and(FI_Objects.greaterThan59).test(this.passenger))
-            price = FI_Objects.calculatePrice.apply(price,.85f);
-        else if(FI_Objects.lessThan13.test(this.passenger))
-            price = FI_Objects.calculatePrice.apply(price,.50f);
-        else if(FI_Objects.greaterThan59.test(this.passenger))
-            price = FI_Objects.calculatePrice.apply(price,.60f);
-        else if(FI_Objects.equalsFemale.test(this.passenger))
-            price = FI_Objects.calculatePrice.apply(price,.25f);
+    public void calculatePrice() {
+        if (FI.equalsFemale.and(FI.lessThan13).test(this.passenger))
+            price = FI.calculatePrice.apply(price, .75f);
+        else if (FI.equalsFemale.and(FI.greaterThan59).test(this.passenger))
+            price = FI.calculatePrice.apply(price, .85f);
+        else if (FI.lessThan13.test(this.passenger))
+            price = FI.calculatePrice.apply(price, .50f);
+        else if (FI.greaterThan59.test(this.passenger))
+            price = FI.calculatePrice.apply(price, .60f);
+        else if (FI.equalsFemale.test(this.passenger))
+            price = FI.calculatePrice.apply(price, .25f);
     }
 
-    }
+}
 
 
