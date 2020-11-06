@@ -30,7 +30,7 @@ public class Database {
             .buildSessionFactory();
 
 
-    //Creates an entity of any type
+    //Creates an entity
     public <T> void createEntity(T entity) {
         try {
             final var session = sessionFactory.openSession();
@@ -43,23 +43,19 @@ public class Database {
         }
     }
 
-
-
     //Grabs available times based on origin & destination
     public List<String> getScheduleTimes(String origin, String destination) {
         var list = FI.retrieveList
                 .apply("SELECT s.departureTime FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "'",
-                        sessionFactory.openSession()).get();
-
-        return (List<String>) list.stream().map(Object::toString).collect(Collectors.toList());
+                        sessionFactory.openSession());
+        return list.stream().map(Object::toString).collect(Collectors.toList());
     }
 
     //Grabs available times based on origin & destination
     public Schedule retrieveSchedule(String origin, String destination, String departureTime) {
         var list = FI.retrieveList
                 .apply("FROM Schedule s WHERE s.origin = '" + origin + "' AND s.destination = '" + destination + "' AND s.departureTime = '"
-                                + LocalTime.parse(departureTime) + "'", sessionFactory.openSession()).get();
-
+                        + LocalTime.parse(departureTime) + "'", sessionFactory.openSession());
         return (Schedule) list.get(0);
     }
 
@@ -67,19 +63,19 @@ public class Database {
 
         var ticketDetails = "";
 
-        if(FI.isNull.negate().test(List.of(p,bp,ss)))
-         ticketDetails = "Passenger Name: " + p.getName() + "\n" +
-                "Phone Number: " + p.getPhoneNumber() + "\n" +
-                "Email: " + p.getEmail() + "\n" +
-                "Gender: " + p.getGender() + "\n" +
-                "Age: " + p.getAge() + "\n" +
-                "Ticket Number: " + bp.getBoardingPassNum() + "\n" +
-                "Date: " + bp.getDate().toString() + "\n" +
-                "Departure Time: " + ss.getDepartureTime().toString() + "\n" +
-                "Arrival Time: " + ss.getArrivalTime().toString() + "\n" +
-                "Origin: " + ss.getOrigin() + "\n" +
-                "Destination: " + ss.getDestination() + "\n" +
-                 "Price: " + "$" + String.format("%.2f",bp.getPrice());
+        if (FI.isNull.negate().test(List.of(p, bp, ss)))
+            ticketDetails = "Passenger Name: " + p.getName() + "\n" +
+                    "Phone Number: " + p.getPhoneNumber() + "\n" +
+                    "Email: " + p.getEmail() + "\n" +
+                    "Gender: " + p.getGender() + "\n" +
+                    "Age: " + p.getAge() + "\n" +
+                    "Ticket Number: " + bp.getBoardingPassNum() + "\n" +
+                    "Date: " + bp.getDate().toString() + "\n" +
+                    "Departure Time: " + ss.getDepartureTime().toString() + "\n" +
+                    "Arrival Time: " + ss.getArrivalTime().toString() + "\n" +
+                    "Origin: " + ss.getOrigin() + "\n" +
+                    "Destination: " + ss.getDestination() + "\n" +
+                    "Price: " + "$" + String.format("%.2f", bp.getPrice());
 
         try {
             Files.writeString(filePath, ticketDetails);
