@@ -23,9 +23,7 @@ public class BoardingPass {
     @ManyToOne(fetch=FetchType.LAZY)
     Schedule schedule;
 
-    public BoardingPass() {
-    }
-
+    public BoardingPass() {}
 
     public float getPrice() {
         return price;

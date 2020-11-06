@@ -43,8 +43,6 @@ public class FormController {
 
     private final Database database = new Database();
 
-    private boolean canGeneratePrice = false;
-
     ObservableList<String> locationsList = FXCollections
             .observableArrayList("Sapelo Island", "St. Catherines Island", "Little Tybee Island");
 
@@ -74,6 +72,7 @@ public class FormController {
 
         originChoiceBox.setOnMouseClicked(event -> {
             destinationChoiceBox.setValue(null);
+            departureTimeChoiceBox.setDisable(true);
         });
 
         //Adds times to departure time choice box
@@ -109,7 +108,7 @@ public class FormController {
         departureTimeChoiceBox.setItems(timesList);
     }
 
-
+    //Calculates Price with discounts
     public void initCalculateBtn() {
         calculateBtn.setOnAction(event -> {
             if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
@@ -126,7 +125,7 @@ public class FormController {
         });
     }
 
-
+    //Books Passenger
     public void initBookBtn() {
         bookBtn.setOnAction(event -> {
             if (isValid(name.getText(), phoneNumber.getText(), email.getText(), age.getText(),
@@ -227,13 +226,13 @@ public class FormController {
 
             ticketAnchorPane.setVisible(false);
             ticket.setText("");
-
             formAnchorPane.setVisible(true);
             priceBarAnchorPane.setVisible(true);
             logo.setVisible(true);
             calculateBtn.setVisible(true);
             reRunButton.setVisible(false);
-            //set everything to null
+
+            //set everything to null or empty
             genderChoiceBox.setValue(null);
             name.setText("");
             email.setText("");
@@ -247,7 +246,5 @@ public class FormController {
             price.setText("$0.00");
             arrivalTime.setText("");
         });
-
     }
-
 }

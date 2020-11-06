@@ -3,10 +3,9 @@ import javafx.scene.Node;
 import main.java.model.Gender;
 import main.java.model.Passenger;
 import org.hibernate.Session;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.*;
 import java.util.regex.Matcher;
 
@@ -21,7 +20,7 @@ public class FI {
 
      static public BiFunction<Float,Float,Float> discountPrice = (price, discount) -> (float) (price - (price *  discount));
 
-     static public BiConsumer<List<Node>, Consumer<Node>> addEventListener = Iterable::forEach;
+     //static public BiConsumer<List<Node>, Consumer<Node>> addEventListener = Iterable::forEach;
 
      static public BiFunction<Float, Passenger, Float> calculatePrice = (price, passenger) ->
      {
@@ -55,19 +54,18 @@ public class FI {
 
 
      //Hibernate Variables
-     static public BiFunction<String,Session, Optional<List>> retrieveList = (query, s) -> {
-          List list = null;
+     static public BiFunction<String,Session,List<Object>> retrieveList = (query, s) -> {
           try {
                s.beginTransaction();
-               list = s.createQuery(query).getResultList();
+               List<Object> list = s.createQuery(query).getResultList();
                s.getTransaction().commit();
                s.close();
-               return Optional.ofNullable(list);
+               return list;
           }
           catch (Exception e){
                e.printStackTrace();
           }
-          return Optional.ofNullable(list);
+          return new ArrayList<>();
      };
 
 
