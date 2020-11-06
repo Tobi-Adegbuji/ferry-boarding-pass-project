@@ -1,27 +1,12 @@
-<<<<<<< Updated upstream
-Passenger Name: John
-Phone Number: 6787903074
-Email: j@gmail.com
+Passenger Name: kai
+Phone Number: 7203483333
+Email: kai@kai.com
 Gender: MALE
-Age: 12
+Age: 33
 Ticket Number: 7
-Date: 2020-11-18
-Departure Time: 09:00
-Arrival Time: 11:00
-Origin: St. Catherines Island
-Destination: Little Tybee Island
-Price: $12.88
-=======
-Passenger Name: Kai
-Phone Number: 7204592888
-Email: kaishu83@gmail.com
-Gender: FEMALE
-Age: 32
-Ticket Number: 7
-Date: 2020-11-22
-Departure Time: 13:00
-Arrival Time: 13:45
-Origin: Sapelo Island
-Destination: St. Catherines Island
-Price: $11.325001
->>>>>>> Stashed changes
+Date: 2020-11-09
+Departure Time: 16:00
+Arrival Time: 18:30
+Origin: Little Tybee Island
+Destination: Sapelo Island
+Price: $35.75

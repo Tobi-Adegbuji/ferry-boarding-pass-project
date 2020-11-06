@@ -12,15 +12,12 @@ import java.net.URL;
 import java.text.Normalizer;
 
 public class Main extends Application {
-   static boolean reBook=false;
+
 
     public static void main(String[] args) {
-
-        FormController f=new FormController();
-        do {
             launch(args);
-        }while(f.reRun());
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -32,7 +29,8 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
-        reBook=false;
+
     }
+
 
 }

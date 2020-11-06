@@ -33,7 +33,7 @@ public class FormController {
     @FXML
     private ImageView logo;
     @FXML
-    private Button bookBtn, calculateBtn,reRunButton;
+    private Button bookBtn, calculateBtn, reRunButton;
 
     private final Animations animations = new Animations();
 
@@ -56,6 +56,7 @@ public class FormController {
         initChoiceBoxes();
         initBookBtn();
         initCalculateBtn();
+        initReRun();
         //Loading data in database
         DataBootStrap.bootstrapData();
         animations.fadeIn(logo, 4000);
@@ -118,8 +119,8 @@ public class FormController {
                 var gender = genderChoiceBox.getValue().equals("MALE") ? Gender.MALE : Gender.FEMALE;
                 var schedule = database.retrieveSchedule(originChoiceBox.getValue(), destinationChoiceBox.getValue(), departureTimeChoiceBox.getValue());
                 arrivalTime.setText(schedule.getArrivalTime().toString());
-                var passenger = new Passenger(gender ,Integer.parseInt(age.getText()));
-                price.setText(String.format("%.2f",FI.calculatePrice.apply(schedule.getOriginalPrice(),passenger)));
+                var passenger = new Passenger(gender, Integer.parseInt(age.getText()));
+                price.setText(String.format("%.2f", FI.calculatePrice.apply(schedule.getOriginalPrice(), passenger)));
             }
             hasErrors(errorsList);
         });
@@ -154,6 +155,7 @@ public class FormController {
                 priceBarAnchorPane.setVisible(false);
                 logo.setVisible(false);
                 calculateBtn.setVisible(false);
+                reRunButton.setVisible(true);
             }
             hasErrors(errorsList);
         });
@@ -218,11 +220,34 @@ public class FormController {
         });
     }
 
-    public  boolean reRun( ){
-        reRunButton.setOnAction(event->{
-                b=true;
-            });
-            return b;
+
+    public void initReRun() {
+        // show everything again
+        reRunButton.setOnAction(event -> {
+
+            ticketAnchorPane.setVisible(false);
+            ticket.setText("");
+
+            formAnchorPane.setVisible(true);
+            priceBarAnchorPane.setVisible(true);
+            logo.setVisible(true);
+            calculateBtn.setVisible(true);
+            reRunButton.setVisible(false);
+            //set everything to null
+            genderChoiceBox.setValue(null);
+            name.setText("");
+            email.setText("");
+            age.setText("");
+            phoneNumber.setText("");
+            name.setText("");
+            datePicker.setValue(null);
+            originChoiceBox.setValue(null);
+            destinationChoiceBox.setValue(null);
+            departureTimeChoiceBox.setValue(null);
+            price.setText("$0.00");
+            arrivalTime.setText("");
+        });
+
     }
 
 }

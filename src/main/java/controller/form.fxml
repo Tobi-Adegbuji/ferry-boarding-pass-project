@@ -127,5 +127,6 @@
          </font>
       </Label>
       <Button fx:id="calculateBtn" layoutX="237.0" layoutY="535.0" mnemonicParsing="false" style="-fx-background-color: blue;" text="Calculate" textFill="WHITE" />
+      <Button fx:id="reRunButton" layoutX="119.0" layoutY="470.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book Another Trip" textFill="WHITE" visible="false" />
     </children>
 </AnchorPane>
